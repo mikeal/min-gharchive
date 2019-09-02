@@ -11,7 +11,7 @@ const tsToFilename = ts => {
   const month = (ts.getUTCMonth() + 1).toString().padStart(2, '0')
   const day = ts.getUTCDate().toString().toString().padStart(2, '0')
   const hour = ts.getUTCHours()
-  const name =  `${year}-${month}-${day}-${hour}.json.gz`
+  const name = `${year}-${month}-${day}-${hour}.json.gz`
   return name
 }
 
@@ -29,7 +29,6 @@ const map = {
   PullRequestReviewCommentEvent: 'prcomment',
   ReleaseEvent: 'release',
   MemberEvent: 'member',
-  PushEvent: 'push',
   CommitCommentEvent: 'ccomment'
 }
 
@@ -37,11 +36,11 @@ const minEvent = type => {
   return map[type]
 }
 
-const filterArchive = async function * (ts) => {
-  const name = tsToFilename(ts) 
+const filterArchive = async function * (ts) {
+  const name = tsToFilename(ts)
   const stream = await get(name)
   const reader = stream.pipe(zlib.createUnzip()).pipe(JSONStream())
-  for await (let event of reader) {
+  for await (const event of reader) {
     const o = {}
     o.id = event.id
     o.dt = event.created_at
@@ -71,3 +70,4 @@ const filterArchive = async function * (ts) => {
 }
 
 module.exports = filterArchive
+module.exports.tsToFilename = tsToFilename
