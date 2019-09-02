@@ -7,12 +7,12 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: Build
-      uses: ianwalter/puppeteer@master
+      uses: actions/npm@master
       with:
         entrypoint: npm
         args: install
     - name: Test
-      uses: ianwalter/puppeteer@master
+      uses: actions/npm@master
       with:
         entrypoint: npm
         args: test
@@ -25,7 +25,3 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-    - uses: mikeal/bundle-size-action@master
-    - uses: mikeal/publish-to-github-action@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
