@@ -1,7 +1,6 @@
 {
   "name": "min-gharchive",
   "version": "0.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "standard"
@@ -18,5 +17,17 @@
   },
   "devDependencies": {
     "standard": "^14.1.0"
-  }
+  },
+  "directories": {
+    "lib": "lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mikeal/min-gharchive.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mikeal/min-gharchive/issues"
+  },
+  "homepage": "https://github.com/mikeal/min-gharchive#readme",
+  "description": ""
 }
