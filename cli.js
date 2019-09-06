@@ -1,32 +1,20 @@
 #!/usr/bin/env node
-const min = require('./')
 const action = require('./lib/action')
 const pullHour = require('./lib/pull-hour')
-
-const onehour = 1000 * 60 * 60
-
-const pullRange = async argv => {
-  let start = new Date(argv.starttime)
-  const end = new Date(argv.endtime)
-  let output = argv.output
-  if (output && !output.endsWith('/')) output += '/'
-  while (start < end) {
-    argv.datetime = start
-    if (output) {
-      console.log('pulling ' + start)
-      const filename = min.tsToFilename(start)
-      argv.output = output + filename
-    }
-    await pullHour(argv)
-    start = new Date(start.getTime() + onehour)
-  }
-}
 
 const outputOptions = yargs => {
   yargs.option('output', {
     alias: 'o',
     description: 'Output file or directory.'
   })
+}
+
+const getTime = dt => (new Date(dt)).getTime()
+
+const pullRange = yargs => {
+  const start = getTime(yargs.starttime)
+  const end = getTime(yargs.endtime)
+  return action.pullRange(start, end)
 }
 
 const yargs = require('yargs')
