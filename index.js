@@ -1,8 +1,6 @@
-const JSONStream = require('json-stream')
+const JSONStream = require('jsonstream2')
 const zlib = require('zlib')
 const bent = require('bent')
-
-// https://data.gharchive.org/2015-01-01-15.json.gz
 
 const get = bent('https://data.gharchive.org/')
 
@@ -39,7 +37,7 @@ const minEvent = type => {
 const filterArchive = async function * (ts) {
   const name = tsToFilename(ts)
   const stream = await get(name)
-  const reader = stream.pipe(zlib.createUnzip()).pipe(JSONStream())
+  const reader = stream.pipe(zlib.createUnzip()).pipe(JSONStream.parse())
   for await (const event of reader) {
     const o = {}
     o.id = event.id
